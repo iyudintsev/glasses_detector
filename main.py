@@ -18,17 +18,25 @@ def main():
     input_shape = (150, 150, 3)
     model = create_convnet(input_shape)
     model.load_weights('./models/convnet.h5')
-    for f in sorted(os.listdir(path_to_images)):
-        f = os.path.join(path_to_images, f)
-        image = detect_face(f)
+    print('loading model...')
+    print('start detection')
+    for f in os.listdir(path_to_images):
+        f_full = os.path.join(path_to_images, f)
+        image = detect_face(f_full)
         if image is None:
+            print("detector couldn't detect a face: %s" % f)
             continue
         result = model.predict(np.array([image]), batch_size=16)
         if result[0] > 0.5:
-            people_with_glasses.append(f)
-    print("detected %d images" % len(people_with_glasses))
+            people_with_glasses.append(f_full)
+    print('done!')
+    print("detected %d image (people with glasses)" % len(people_with_glasses))
+    people_with_glasses.sort()
     if people_with_glasses:
         print('\n'.join(people_with_glasses))
+    with open('results.txt', 'w') as f:
+        for path in people_with_glasses:
+            f.write(path + '\n')
 
 
 if __name__ == "__main__":
