@@ -1,0 +1,5 @@
+*.dat
+*.txt
+logs/
+__pycache__/
+data/
