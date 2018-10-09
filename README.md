@@ -19,7 +19,7 @@
 1) В папке `models` запустите скрипт `get_shape_predictor.sh`, чтобы скачать модель для распознавания и выравнивания лица на фотографии.
 
 2) Далее, создайте папку `data` в рабочей директории проекта (`mkdir data`). Загрузите в папку `data` два файла [`list_attr_celeba.txt`](https://drive.google.com/drive/folders/0B7EVK8r0v71pOC0wOVZlQnFfaGs) и 
-[`img_aligh_celeba.zip`](https://drive.google.com/drive/folders/0B7EVK8r0v71pOC0wOVZlQnFfaGs). Распакуйте архив `unzip img_aligh_celeba.zip`.
+[`img_aligh_celeba.zip`](https://drive.google.com/drive/folders/0B7EVK8r0v71pTUZsaXdaSnZBZzg). Распакуйте архив `unzip img_aligh_celeba.zip`.
 
 3) Запустите файл `python3 prepare_data.py` для подготовки данных для обучения. Этот процесс может занять некоторое время. Его результатом будет выборка данных для обучения и тестирования `./data/images`.
 
