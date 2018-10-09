@@ -24,7 +24,7 @@ def main():
         f_full = os.path.join(path_to_images, f)
         image = detect_face(f_full)
         if image is None:
-            print("detector couldn't detect a face: %s" % f)
+            print("detector couldn't find a face: %s" % f)
             continue
         result = model.predict(np.array([image]), batch_size=16)
         if result[0] > 0.5:
