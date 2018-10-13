@@ -3,11 +3,11 @@ import dlib
 
 
 predictor_path = './models/shape_predictor_5_face_landmarks.dat'
+detector = dlib.get_frontal_face_detector()
+sp = dlib.shape_predictor(predictor_path)
 
 
 def detect_face(path_to_image):
-    detector = dlib.get_frontal_face_detector()
-    sp = dlib.shape_predictor(predictor_path)
     img = dlib.load_rgb_image(path_to_image)
     dets = detector(img, 1)
     num_faces = len(dets)
