@@ -1,15 +1,14 @@
 import os
-import sys
+import click
 import numpy as np
 from model import create_convnet
 from utils import detect_face
 
 
-def main():
-    if len(sys.argv) != 2:
-        print('incorrect format of execution')
-        return
-    path_to_images = sys.argv[1]
+@click.command()
+@click.option('--path_to_images', help="path to images")
+@click.option('--cnn_detector', help="available values: True, False", default=False)
+def main(path_to_images, cnn_detector):
     if not os.path.exists(path_to_images):
         print('incorrect path to images')
         return
@@ -22,7 +21,7 @@ def main():
     print('start detection')
     for f in os.listdir(path_to_images):
         f_full = os.path.join(path_to_images, f)
-        image = detect_face(f_full)
+        image = detect_face(f_full, cnn_detector)
         if image is None:
             print("detector couldn't find a face: %s" % f)
             continue

@@ -3,6 +3,7 @@ import json
 import requests
 import telebot
 import wget
+import click
 import numpy as np
 from model import create_convnet
 from PIL import Image
@@ -17,6 +18,7 @@ model = create_convnet(input_shape)
 model.load_weights('./models/convnet.h5')
 print("done!")
 
+cnn_face_detector = False
 
 counter = len(os.listdir('./photo'))
 with open('token.txt') as f:
@@ -55,7 +57,7 @@ def process_photo(message):
     if path_to_image is None:
         bot.reply_to(message, "Please, try again later.")
         return
-    image = detect_face(path_to_image)
+    image = detect_face(path_to_image, cnn_face_detector)
     if image is None:
         bot.reply_to(message, "I couldn't find a face.")
         print("request, status -1")
@@ -71,6 +73,15 @@ def process_photo(message):
     print("request, status %d" % status)
 
 
-if __name__ == "__main__":
+@click.command()
+@click.option('--cnn_detector', help="available values: True, False", default=False)
+def main(cnn_detector):
+    if cnn_detector:
+        global cnn_face_detector
+        cnn_face_detector = True
     print("the application is running")
     bot.polling(none_stop=True)
+
+
+if __name__ == "__main__":
+    main()
