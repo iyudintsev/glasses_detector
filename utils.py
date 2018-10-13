@@ -14,16 +14,15 @@ def get_dets(img, cnn_det):
     if len(dets) == 0:
         if not cnn_det:
             return None
-        else:
-            global cnn_detector
-            if cnn_detector is None:
-                cnn_detector = dlib.cnn_face_detection_model_v1(cnn_detector_path)
-            dets = cnn_detector(img, 1)
-            if len(dets) == 0:
-                return None
-            rects = dlib.rectangles()
-            rects.extend([d.rect for d in dets])
-            dets = rects
+        global cnn_detector
+        if cnn_detector is None:
+            cnn_detector = dlib.cnn_face_detection_model_v1(cnn_detector_path)
+        dets = cnn_detector(img, 1)
+        if len(dets) == 0:
+            return None
+        rects = dlib.rectangles()
+        rects.extend([d.rect for d in dets])
+        dets = rects
     return dets
 
 

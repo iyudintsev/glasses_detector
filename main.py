@@ -7,7 +7,7 @@ from utils import detect_face
 
 @click.command()
 @click.option('--path_to_images', help="path to images")
-@click.option('--cnn_detector', help="available values: True, False", default=False)
+@click.option('--cnn_detector', help="available values: True, False", default=False, type=bool)
 def main(path_to_images, cnn_detector):
     if not os.path.exists(path_to_images):
         print('incorrect path to images')

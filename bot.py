@@ -74,7 +74,7 @@ def process_photo(message):
 
 
 @click.command()
-@click.option('--cnn_detector', help="available values: True, False", default=False)
+@click.option('--cnn_detector', help="available values: True, False", default=False, type=bool)
 def main(cnn_detector):
     if cnn_detector:
         global cnn_face_detector
