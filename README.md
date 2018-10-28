@@ -1,4 +1,4 @@
-# Description
+# Glasses Detector
 
 This deep learning model allows recognizing whether a person in the photo has glasses. 
 
@@ -12,7 +12,7 @@ At first, we use the model from `dlib` that allows obtaining landmarks. After th
 
 [CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) could be chosen as the data for this task. We developed a script for obtaining a balanced dataset containing persons with and without glasses (about 25000 photos). 
 
-# How to use this code
+## How to use this code
 
 1) In the folder `models`, you should run the script `get_shape_predictor.sh` to get the model from `dlib` for obtaining landmarks on a face.
 
