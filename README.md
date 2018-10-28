@@ -1,40 +1,29 @@
-# Описание
+# Description
 
-Для распознавания человека в очках на фотографии предлагается использовать следующий подход.
+This deep learning model allows recognizing whether a person in the photo has glasses. 
 
-## Модель
+## The model
 
-В качестве постановки задачи может рассматриваться бинарная классификация фото людей на предмет наличия очков или их отсутствия с использованием сверточной нейронной сети.
+As a baseline we could use [the model](https://www.researchgate.net/publication/320964354_Shallow_convolutional_neural_network_for_eyeglasses_detection_in_facial_images) based on [GoogleNet](https://arxiv.org/abs/1409.4842). However, we used the model that relies on [VGG16](https://arxiv.org/abs/1409.1556). This model was simplified for CPU computations.
 
-В качестве базовой модели можно использовать [модель](https://www.researchgate.net/publication/320964354_Shallow_convolutional_neural_network_for_eyeglasses_detection_in_facial_images) построенную на основе [GoogleNet](https://arxiv.org/abs/1409.4842). Однако, в нашем случае использовалась модель, построенная на основе [VGG16](https://arxiv.org/abs/1409.1556), но немного упрощенная из-за отсутствия gpu.
+## Data
 
-## Данные
+At first, we use the model from `dlib` that allows obtaining landmarks. After that, we alighn and extract a face from a photo using the HOG and `dlib` as well.
 
-Для распознования и выравнивания лиц на фото мы будем использовать готовый детектор из `dlib`.
+[CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) could be chosen as the data for this task. We developed a script for obtaining a balanced dataset containing persons with and without glasses (about 25000 photos). 
 
-В качестве датасета можно использовать [CelebA](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html). Достаточно выбрать фото знаменитостей с очками и без. Выборка строилась как сбалансированная (~25000 фотографий). 
+# How to use this code
 
-# Инструкции
+1) In the folder `models`, you should run the script `get_shape_predictor.sh` to get the model from `dlib` for obtaining landmarks on a face.
 
-1) В папке `models` запустите скрипт `get_shape_predictor.sh`, чтобы скачать модель для выравнивания лица на фотографии.
+** You can use the trained model directly. The detail is on the step 5**
 
-**Для запуска модели на тестовой выборке перейдите к пункту 5**
+2) Next, you should make the folder `data` in the main directory of the project (`mkdir data`). Download two files [`list_attr_celeba.txt`](https://drive.google.com/drive/folders/0B7EVK8r0v71pOC0wOVZlQnFfaGs) and 
+[`img_aligh_celeba.zip`](https://drive.google.com/drive/folders/0B7EVK8r0v71pTUZsaXdaSnZBZzg) into the `data` directory. Unzip the archive `unzip img_aligh_celeba.zip`.
 
-2) Далее, создайте папку `data` в рабочей директории проекта (`mkdir data`). Загрузите в папку `data` два файла [`list_attr_celeba.txt`](https://drive.google.com/drive/folders/0B7EVK8r0v71pOC0wOVZlQnFfaGs) и 
-[`img_aligh_celeba.zip`](https://drive.google.com/drive/folders/0B7EVK8r0v71pTUZsaXdaSnZBZzg). Распакуйте архив `unzip img_aligh_celeba.zip`.
+3) After that, execute `python3 prepare_data.py` for obtaining data for training. This process can take some time. The result of this is training and test dataset in the folder `./data/images`.
 
-3) Запустите файл `python3 prepare_data.py` для подготовки данных для обучения. Этот процесс может занять некоторое время. Его результатом будет выборка данных для обучения и тестирования `./data/images`.
+4) At this step, you should execute `python3 run_model.py` for the model training.
 
-4) Запустите обучение модели `python3 run_model.py`.
-
-5) Для получения результатов на тестовой выборке запустите файл `python3 main.py --path_to_images path/to/images`. На вход подается директория с изображениями, на выходе - пути к файлам с людьми в очках в файле `results.txt`. Так же информация дублируется в поток вывода, кроме того ведется статистика работы алгоритма обнаружения лица, предоставляемый `dlib`. Кроме того, доступен аргумент `--cnn_detector True` для запуска на gpu, который запускает [детектор](https://www.arunponnusamy.com/cnn-face-detector-dlib.html), построенный на CNN, в случае ошибок стандартного.
-
-# Возможные улучшения модели
-
-Из возможных улучшений предлагается 
-
-- добавить данных в тренировочную выборку (data augmentation etc.),
-
-- настроить параметр затухания `learning rate` в оптимизаторе.
-
-К сожалению, ограничения по времени расчетов, связанные с отсутствием gpu, не позволили проверить эти идеи.
+5) If you want to use the trained model then you should execute `python3 main.py --path_to_images path/to/images`. The input is the folder with images and the output is a file `results.txt` with paths to the images containing persons with glasses.
+Also, you can use `--cnn_detector True` for using [the model](https://www.arunponnusamy.com/cnn-face-detector-dlib.html) based on a convolutional neural network.
