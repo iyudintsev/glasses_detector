@@ -16,7 +16,7 @@ At first, we use the model from `dlib` that allows obtaining landmarks. After th
 
 1) In the folder `models`, you should run the script `get_shape_predictor.sh` to get the model from `dlib` for obtaining landmarks on a face.
 
-**You can use the trained model directly. The detail is on step 5**
+**You can use the trained model directly. The detail is at step 5**
 
 2) Next, you should make the folder `data` in the main directory of the project (`mkdir data`). Download two files [`list_attr_celeba.txt`](https://drive.google.com/drive/folders/0B7EVK8r0v71pOC0wOVZlQnFfaGs) and 
 [`img_aligh_celeba.zip`](https://drive.google.com/drive/folders/0B7EVK8r0v71pTUZsaXdaSnZBZzg) into the `data` directory. Unzip the archive `unzip img_aligh_celeba.zip`.
