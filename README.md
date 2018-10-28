@@ -26,3 +26,9 @@ At first, we use the model from `dlib` that allows obtaining landmarks. After th
 4) At this step, you should execute `python3 run_model.py` for the model training.
 
 5) If you want to use the trained model then you should execute `python3 main.py path/to/images`. The input is the folder with images and the output is a file `results.txt` with paths to the images containing persons with glasses.
+
+## Telegram support
+
+We added `bot.py` for using this service as a telegram bot.
+
+You should just add a token for the telegram bot in the file `token.txt`.
